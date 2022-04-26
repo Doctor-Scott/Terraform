@@ -11,7 +11,6 @@ To run -
 * terraform plan
 * terraform apply
 
-
 To teardown -
 
 * terraform destroy
