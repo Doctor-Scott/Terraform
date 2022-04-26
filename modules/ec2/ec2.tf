@@ -33,7 +33,7 @@ resource "aws_instance" "docker" {
     Name = "estio-docker"
   }
   depends_on = [var.vpc_id, var.igw_id]
-  //user_data  = file("modules/webserver/scripts/dockerStart.sh")
+  //user_data  = file("modules/ec2/scripts/dockerStart.sh")
 
 }
 
@@ -58,7 +58,7 @@ resource "aws_instance" "ansible" {
   }
 
   provisioner "file" {
-    source      = "modules/webserver/scripts/playbook.yml"
+    source      = "modules/ec2/scripts/playbook.yml"
     destination = "/home/ubuntu/playbook.yml"
     connection {
       host        = aws_instance.ansible.public_ip
@@ -69,7 +69,7 @@ resource "aws_instance" "ansible" {
   }
 
   provisioner "file" {
-    source      = "modules/webserver/scripts/inventory.yml"
+    source      = "modules/ec2/scripts/inventory.yml"
     destination = "/home/ubuntu/inventory.yml"
     connection {
       host        = aws_instance.ansible.public_ip
@@ -84,6 +84,6 @@ resource "aws_instance" "ansible" {
     Name = "estio-ansible"
   }
   depends_on = [var.vpc_id, var.igw_id, aws_instance.docker]
-  user_data  = file("modules/webserver/scripts/ansibleStart.sh")
+  user_data  = file("modules/ec2/scripts/ansibleStart.sh")
 
 }
