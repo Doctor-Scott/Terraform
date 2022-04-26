@@ -16,7 +16,7 @@ To teardown -
 
 * terraform destroy
 
-Make sure to have a .AWS/credentials file in your home directory
+Make sure to have an .AWS/credentials file in your home directory
 
 [estio]
 
