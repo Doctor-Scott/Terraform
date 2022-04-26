@@ -15,3 +15,11 @@ To run -
 To teardown -
 
 * terraform destroy
+
+Make sure to have a .AWS/credentials file in your home directory
+
+[estio]
+
+aws_access_key_id = ""
+
+aws_secret_access_key = ""
