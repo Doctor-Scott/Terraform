@@ -40,3 +40,7 @@ data "aws_availability_zones" "available" {
 output "ansiblePublicIP" {
   value = module.ec2.ansiblePublicIP
 }
+
+output "dockerPublicIP" {
+  value = module.ec2.dockerPublicIP
+}
