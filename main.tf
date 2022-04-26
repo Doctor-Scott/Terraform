@@ -24,8 +24,8 @@ module "vpc" {
   subnet_private2_id = module.vpc.subnet_private2_id
 } */
 
-module "webserver" {
-  source     = "./modules/webserver"
+module "ec2" {
+  source     = "./modules/ec2"
   vpc_id     = module.vpc.vpc_id
   subnet_id  = module.vpc.subnet_public_id
   igw_id     = module.vpc.igw_id
@@ -38,9 +38,9 @@ data "aws_availability_zones" "available" {
 }
 
 output "ansiblePublicIP" {
-  value = module.webserver.ansiblePublicIP
+  value = module.ec2.ansiblePublicIP
 }
 
 output "dockerPrivateIP" {
-  value = module.webserver.dockerPrivateIP
+  value = module.ec2.dockerPrivateIP
 }
