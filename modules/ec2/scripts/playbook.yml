@@ -43,3 +43,5 @@
         group: docker
     - name: pull hello world image
       command: docker pull digitalocean/flask-helloworld
+    - name: run docker image
+      command: docker run --name flask -p 80:5000 digitalocean/flask-helloworld:latest
