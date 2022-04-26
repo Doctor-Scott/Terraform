@@ -26,8 +26,8 @@ resource "aws_instance" "docker" {
   key_name                    = var.ssh_key
   associate_public_ip_address = true
   subnet_id                   = var.subnet_id
-  private_ip                  = var.private_ip  
-  vpc_security_group_ids = [aws_security_group.ec2-sg.id]
+  private_ip                  = var.private_ip
+  vpc_security_group_ids      = [aws_security_group.ec2-sg.id]
 
   tags = {
     Name = "estio-docker"
@@ -43,8 +43,8 @@ resource "aws_instance" "ansible" {
   key_name                    = var.ssh_key
   associate_public_ip_address = true
   subnet_id                   = var.subnet_id
-  
-  vpc_security_group_ids      = [aws_security_group.ec2-sg.id]
+
+  vpc_security_group_ids = [aws_security_group.ec2-sg.id]
 
   provisioner "file" {
     source      = "~/.ssh/${var.ssh_key}.pem"
@@ -83,7 +83,7 @@ resource "aws_instance" "ansible" {
   tags = {
     Name = "estio-ansible"
   }
-  depends_on = [var.vpc_id, var.igw_id,aws_instance.docker]
+  depends_on = [var.vpc_id, var.igw_id, aws_instance.docker]
   user_data  = file("modules/webserver/scripts/ansibleStart.sh")
 
 }
