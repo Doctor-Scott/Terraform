@@ -35,13 +35,17 @@
         - docker-ce
         - docker-ce-cli 
         - containerd.io
+        - docker-compose
     - name: Change owner of docker.sock 
       command: sudo chown ubuntu /var/run/docker.sock
     - name: Add user to docker group
       user:
         name: "{{ansible_user}}"
         group: docker
-    - name: pull hello world image
-      command: docker pull digitalocean/flask-helloworld
-    - name: run docker image
-      command: docker run --name flask -p 80:5000 digitalocean/flask-helloworld:latest
+    - name: Pull repo
+      command: git clone https://github.com/Doctor-Scott/pythonFlask.git
+    - name: Run docker-compose 
+      shell:
+        cmd: "docker-compose -f docker-compose.yaml  up -d"
+        chdir: /home/ubuntu/pythonFlask/
+
