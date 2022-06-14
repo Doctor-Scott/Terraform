@@ -50,7 +50,9 @@ module "mysqlDB" {
 data "aws_availability_zones" "available" {
   state = "available"
 }
-
+ output "rds_endpoint" {
+  value = module.mysqlDB.rds_endpoint
+}
 /* output "webserverPublicIp" {
   value = module.ec2.webserverPublicIp
 } */

@@ -59,7 +59,7 @@ resource "aws_db_instance" "db" {
   allocated_storage      = 10
   vpc_security_group_ids = [aws_security_group.rds-sg.id]
   db_subnet_group_name   = aws_db_subnet_group.mysqlSubnet.id
-  db_name                = "mysqlRDS"
+  db_name                = "estio"
   username               = "root"
   password               = var.dbPassword
   publicly_accessible    = true
@@ -69,4 +69,6 @@ resource "aws_db_instance" "db" {
     Name = "mysql"
   }
 }
- 
+ output "rds_endpoint" {
+  value = aws_db_instance.db.endpoint
+}
