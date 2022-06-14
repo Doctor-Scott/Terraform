@@ -21,14 +21,16 @@ variable "enable_dns_hostnames" {
 
 variable "vpc_name" {
   type        = string
-  default     = "main"
+  default     = "estioVPC"
   description = ""
 }
 
-variable "public_cidr" {}
+variable "public1_cidr" {}
+variable "public2_cidr" {}
 variable "private1_cidr" {}
 variable "private2_cidr" {}
 
 variable "private1_az" {}
 variable "private2_az" {}
-variable "public_az" {}
+variable "public1_az" {}
+variable "public2_az" {}

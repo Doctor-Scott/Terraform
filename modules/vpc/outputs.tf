@@ -15,10 +15,12 @@ output "igw_id" {
   value = aws_internet_gateway.igw.id
 }
 
-output "subnet_public_id" {
-  value = aws_subnet.public.id
+output "subnet_public1_id" {
+  value = aws_subnet.public1.id
 }
-
+output "subnet_public2_id" {
+  value = aws_subnet.public2.id
+}
 output "subnet_private1_id" {
   value = aws_subnet.private1.id
 }

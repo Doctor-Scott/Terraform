@@ -20,7 +20,24 @@ resource "aws_security_group" "ec2-sg" {
   }
 }
 
-resource "aws_instance" "docker" {
+resource "aws_instance" "webserver" {
+  ami                         = var.ami_id
+  instance_type               = "t2.micro"
+  key_name                    = var.ssh_key
+  associate_public_ip_address = true
+  subnet_id                   = var.subnet_id
+  private_ip                  = var.private_ip
+  vpc_security_group_ids      = [aws_security_group.ec2-sg.id]
+
+  tags = {
+    Name = "estio-webserver"
+  }
+  depends_on = [var.vpc_id]
+  //user_data  = file("modules/ec2/scripts/dockerStart.sh")
+
+}
+
+/* resource "aws_instance" "docker" {
   ami                         = var.ami_id
   instance_type               = "t2.micro"
   key_name                    = var.ssh_key
@@ -35,9 +52,9 @@ resource "aws_instance" "docker" {
   depends_on = [var.vpc_id, var.igw_id]
   //user_data  = file("modules/ec2/scripts/dockerStart.sh")
 
-}
+} */
 
-resource "aws_instance" "ansible" {
+/* resource "aws_instance" "ansible" {
   ami                         = var.ami_id
   instance_type               = "t2.micro"
   key_name                    = var.ssh_key
@@ -86,4 +103,4 @@ resource "aws_instance" "ansible" {
   depends_on = [var.vpc_id, var.igw_id, aws_instance.docker]
   user_data  = file("modules/ec2/scripts/ansibleStart.sh")
 
-}
+} */
