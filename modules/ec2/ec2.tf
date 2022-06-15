@@ -1,5 +1,3 @@
-
-
 resource "aws_security_group" "ec2-sg" {
   name        = "security-group"
   description = "allow inbound access to the EC2 instance"
@@ -35,7 +33,7 @@ resource "aws_instance" "webserver" {
   depends_on = [var.vpc_id]
   //user_data  = file("modules/ec2/scripts/dockerStart.sh")
 
-provisioner "file" {
+  provisioner "file" {
     source      = "modules/ec2/scripts/provision.sql"
     destination = "/home/ubuntu/provision.sql"
     connection {

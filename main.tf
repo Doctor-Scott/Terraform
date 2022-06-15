@@ -31,7 +31,7 @@ module "mysqlDB" {
   subnet_public2_id  = module.vpc.subnet_public2_id
   publicIP           = chomp(data.http.checkIp.body)
   dbPassword         = var.dbPassword
-  
+
 }
 
 module "ec2" {
@@ -41,7 +41,7 @@ module "ec2" {
   igw_id     = module.vpc.igw_id
   private_ip = "10.0.1.29"
   rdsDns     = regex("(.+):", module.mysqlDB.rds_endpoint)[0]
-  dbPassword         = var.dbPassword
+  dbPassword = var.dbPassword
 }
 
 data "aws_availability_zones" "available" {
