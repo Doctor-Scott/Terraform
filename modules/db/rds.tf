@@ -69,6 +69,6 @@ resource "aws_db_instance" "db" {
     Name = "mysql"
   }
 }
- output "rds_endpoint" {
+output "rds_endpoint" {
   value = aws_db_instance.db.endpoint
 }

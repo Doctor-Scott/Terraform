@@ -3,11 +3,6 @@ provider "aws" {
   profile = "estio"
 }
 
-data "http" "checkIp" {
-  url = "http://icanhazip.com/"
-}
-
-
 module "vpc" {
   source        = "./modules/vpc"
   vpc_name      = "estioVPC"
@@ -50,7 +45,12 @@ module "mysqlDB" {
 data "aws_availability_zones" "available" {
   state = "available"
 }
- output "rds_endpoint" {
+
+data "http" "checkIp" {
+  url = "http://icanhazip.com/"
+}
+
+output "rds_endpoint" {
   value = module.mysqlDB.rds_endpoint
 }
 /* output "webserverPublicIp" {
