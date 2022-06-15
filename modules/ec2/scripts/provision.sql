@@ -1,5 +1,5 @@
-CREATE SCHEMA IF NOT EXISTS `test`;
-USE test;
+CREATE SCHEMA IF NOT EXISTS `estio`;
+USE estio;
 
 CREATE TABLE `product_types` (
   `type_id` int(11) NOT NULL AUTO_INCREMENT,
