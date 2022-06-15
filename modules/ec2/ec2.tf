@@ -35,6 +35,27 @@ resource "aws_instance" "webserver" {
   depends_on = [var.vpc_id]
   //user_data  = file("modules/ec2/scripts/dockerStart.sh")
 
+provisioner "file" {
+    source      = "modules/ec2/scripts/provision.sql"
+    destination = "/home/ubuntu/provision.sql"
+    connection {
+      host        = aws_instance.webserver.public_ip
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/${var.ssh_key}.pem")
+    }
+  }
+
+  user_data = <<-EOL
+  #!/bin/bash -xe
+
+  sudo apt update
+
+  sudo apt install mysql-client-core-8.0
+
+  mysql -u root -p${var.dbPassword} -h ${var.rdsDns} < ~/provision.sql
+  EOL
+
 }
 
 /* resource "aws_instance" "docker" {

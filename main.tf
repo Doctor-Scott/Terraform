@@ -31,16 +31,18 @@ module "mysqlDB" {
   subnet_public2_id  = module.vpc.subnet_public2_id
   publicIP           = chomp(data.http.checkIp.body)
   dbPassword         = var.dbPassword
+  
 }
 
-/* module "ec2" {
+module "ec2" {
   source     = "./modules/ec2"
   vpc_id     = module.vpc.vpc_id
   subnet_id  = module.vpc.subnet_public1_id
   igw_id     = module.vpc.igw_id
   private_ip = "10.0.1.29"
-
-} */
+  rdsDns     = regex("(.+):", module.mysqlDB.rds_endpoint)[0]
+  dbPassword         = var.dbPassword
+}
 
 data "aws_availability_zones" "available" {
   state = "available"
@@ -51,11 +53,11 @@ data "http" "checkIp" {
 }
 
 output "rds_endpoint" {
-  value = module.mysqlDB.rds_endpoint
+  value = regex("(.+):", module.mysqlDB.rds_endpoint)
 }
-/* output "webserverPublicIp" {
+output "webserverPublicIp" {
   value = module.ec2.webserverPublicIp
-} */
+}
 
 /* output "ansiblePublicIP" {
   value = module.ec2.ansiblePublicIP

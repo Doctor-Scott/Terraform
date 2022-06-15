@@ -25,3 +25,10 @@ variable "igw_id" {
 variable "private_ip" {
   type = string
 }
+
+variable "rdsDns"{
+  type = string
+default = ""
+}
+
+variable "dbPassword" { type = string }
