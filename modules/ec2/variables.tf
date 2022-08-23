@@ -31,4 +31,4 @@ variable "rdsDns" {
   default = ""
 }
 
-variable "dbPassword" { type = string }
+/* variable "dbPassword" { type = string } */

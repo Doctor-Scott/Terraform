@@ -17,12 +17,13 @@ module "vpc" {
   public2_az    = data.aws_availability_zones.available.names[1]
 
 }
-variable "dbPassword" {
-  type = string
-}
+/* variable "dbPassword" {
+  type      = string
+  sensitive = true
+} */
 
-module "mysqlDB" {
-  source = "./modules/db"
+/* module "docdb" {
+  source = "./modules/db/docdb"
 
   vpc_id             = module.vpc.vpc_id
   subnet_private1_id = module.vpc.subnet_private1_id
@@ -32,18 +33,60 @@ module "mysqlDB" {
   publicIP           = chomp(data.http.checkIp.body)
   dbPassword         = var.dbPassword
 
-}
+} */
 
+/* module "mysqlDB" {
+  source = "./modules/db/rds"
+
+  vpc_id             = module.vpc.vpc_id
+  subnet_private1_id = module.vpc.subnet_private1_id
+  subnet_private2_id = module.vpc.subnet_private2_id
+  subnet_public1_id  = module.vpc.subnet_public1_id
+  subnet_public2_id  = module.vpc.subnet_public2_id
+  publicIP           = chomp(data.http.checkIp.body)
+  dbPassword         = var.dbPassword
+
+} 
+ */
+
+ /* module "webserver" {
+  source       = "./modules/ec2/nathanWebserver"
+  vpc_id       = module.vpc.vpc_id
+  my_subnet_id = module.vpc.subnet_public1_id
+
+  get_public_ip = module.webserver.webserverPublicIp
+
+  get_db_endpoint = module.mysqlDB.rds_endpoint
+  username        = "root"
+  password        = var.dbPassword
+  private_ip      = "10.0.1.29" */
+
+
+  /* <database name variable> = "</>" */
+/* database_instance = "estio" 
+  db_name = "estio"
+
+
+
+} 
+
+ module "ec2" {
+  source     = "./modules/ec2"
+  vpc_id     = module.vpc.vpc_id
+  subnet_id  = module.vpc.subnet_public1_id
+  igw_id     = module.vpc.igw_id
+  private_ip = "10.0.1.29"
+  /* rdsDns     = regex("(.+):", module.mysqlDB.rds_endpoint)[0] */
+  /* dbPassword = var.dbPassword */
+/* }  */
 module "ec2" {
   source     = "./modules/ec2"
   vpc_id     = module.vpc.vpc_id
   subnet_id  = module.vpc.subnet_public1_id
   igw_id     = module.vpc.igw_id
   private_ip = "10.0.1.29"
-  rdsDns     = regex("(.+):", module.mysqlDB.rds_endpoint)[0]
-  dbPassword = var.dbPassword
-}
-
+  
+  }
 data "aws_availability_zones" "available" {
   state = "available"
 }
@@ -52,9 +95,13 @@ data "http" "checkIp" {
   url = "http://icanhazip.com/"
 }
 
-output "rds_endpoint" {
-  value = regex("(.+):", module.mysqlDB.rds_endpoint)
-}
+/* output "docdb_endpoint" {
+  value = module.docdb.docdb_endpoint
+} */
+
+/* output "rds_endpoint" {
+  value = regex("(.+):", module.docdb.docdb_endpoint)
+} */
 output "webserverPublicIp" {
   value = module.ec2.webserverPublicIp
 }

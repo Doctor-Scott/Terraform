@@ -33,7 +33,7 @@ resource "aws_instance" "webserver" {
   depends_on = [var.vpc_id]
   //user_data  = file("modules/ec2/scripts/dockerStart.sh")
 
-  provisioner "file" {
+  /* provisioner "file" {
     source      = "modules/ec2/scripts/provision.sql"
     destination = "/home/ubuntu/provision.sql"
     connection {
@@ -45,14 +45,14 @@ resource "aws_instance" "webserver" {
   }
 
   user_data = <<-EOL
-  #!/bin/bash -xe
+  #!/bin/bash
 
   sudo apt update
 
   sudo apt install mysql-client-core-8.0
 
   mysql -u root -p${var.dbPassword} -h ${var.rdsDns} < ~/provision.sql
-  EOL
+  EOL */
 
 }
 
